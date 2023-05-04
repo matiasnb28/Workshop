@@ -4,11 +4,13 @@ import com.example.PersonalWorkshop.model.Budget;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
+
 
 @Repository
 public interface BudgetRepository extends JpaRepository<Budget, Long> {
 
-    //Budget findById(Long id);
+    Optional<Budget> findById(Long id);
 
     Budget findByVehicleId(Long id);
 }

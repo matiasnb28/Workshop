@@ -1,6 +1,9 @@
-/*package com.example.PersonalWorkshop.exception.handler;
+package com.example.PersonalWorkshop.exception.handler;
 
-import com.example.PersonalWorkshop.exception.AlreadyExistsException;
+import com.example.PersonalWorkshop.exception.*;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.web.firewall.RequestRejectedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.MissingRequestHeaderException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -75,4 +78,4 @@ public class HandlerExceptionController {
     public CustomExceptionDetails fatalErrorUnexpectedException(HttpServletRequest request, Exception exception) {
         return new CustomExceptionDetails(exception, request.getRequestURI());
     }
-}*/
+}
