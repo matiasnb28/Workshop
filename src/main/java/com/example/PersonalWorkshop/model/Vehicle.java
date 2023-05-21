@@ -10,6 +10,8 @@ import org.hibernate.annotations.UpdateTimestamp;
 import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Entity
@@ -26,26 +28,41 @@ public class Vehicle {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotBlank(message = "Plate may not be null or empty")
+    @Column(length = 35, nullable = false)
     private String plate;
 
+    @NotBlank (message = "Model may not be null or empty")
+    @Column(length = 35, nullable = false)
     private String model;
 
+    @NotBlank (message = "Brand may not be null or empty")
+    @Column(length = 35, nullable = false)
     private String brand;
 
+    @NotBlank (message = "Year may not be null or empty")
+    @Column(length = 35, nullable = false)
     private String year;
 
+    @Column(length = 35, nullable = false)
     private String km;
 
-    @ManyToOne
+    private boolean deleted = Boolean.FALSE;
+
+    @ManyToOne(fetch = FetchType.EAGER, cascade =  CascadeType.PERSIST)
+    @JoinColumn(name = "user_id", insertable = false, updatable = false)
     private User user;
+
+    @Column(name = "user_id")
+    private Long userId;
 
     @CreationTimestamp
     @Column(name = "creation_date", updatable = false)
-    private Date creationDate;
+    private LocalDateTime creationDate = LocalDateTime.now();
 
     @UpdateTimestamp
     @Column(name = "update_date")
-    private Date updateDate;
+    private LocalDateTime updateDate;
 
     private String state; //TODO Cambiar en algún momento a un Enum
 
