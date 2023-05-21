@@ -4,11 +4,14 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.UpdateTimestamp;
 import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "budgets")
@@ -24,14 +27,14 @@ public class Budget {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER, cascade =  CascadeType.PERSIST)
     @JoinColumn(name = "vehicle_id", insertable = false, updatable = false)
     private Vehicle vehicle;
 
     @Column(name = "vehicle_id")
     private Long vehicleId;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER, cascade =  CascadeType.PERSIST)
     @JoinColumn(name = "user_id", insertable = false, updatable = false)
     private User user;
 
@@ -56,6 +59,16 @@ public class Budget {
     @NotBlank(message = "Price may not be null or empty")
     @Column(nullable = false)
     private Float price;
+
+    private boolean deleted = Boolean.FALSE;
+
+    @CreationTimestamp
+    @Column(name = "creation_date", updatable = false)
+    private LocalDateTime creationDate = LocalDateTime.now();
+
+    @UpdateTimestamp
+    @Column(name = "update_date")
+    private LocalDateTime updateDate;
 
 
 }
